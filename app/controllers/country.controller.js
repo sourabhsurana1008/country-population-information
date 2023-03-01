@@ -34,8 +34,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Countries from the database.
 exports.findAll = (req, res) => {
-
   const query = req.query;
+
   Country.findAll({ 
     where:  generateQuery(query),
     include: [db.provinces]
@@ -144,6 +144,7 @@ function generateQuery(query){
   let queryCondition = [];
 
   Object.keys(query).forEach(key => {
+   
     const value = query[key];
 
     if (value.indexOf(',') > -1) { 
@@ -165,8 +166,7 @@ function generateQuery(query){
         queryCondition[key] = condition;
       
     } else {
-      let condition = key ? { name: { [Op.like]: `%${value}%` } } : null;
-      queryCondition.push(condition);
+      queryCondition[key]  = key ?  { [Op.like]: `%${value}%` } : null;
     }
 
   });
