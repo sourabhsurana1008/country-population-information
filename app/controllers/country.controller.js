@@ -4,8 +4,9 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Country
 exports.create = (req, res) => {
+
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.name) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -13,16 +14,20 @@ exports.create = (req, res) => {
   }
 
   // Create a Country
-  const Country = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+  const country = {
+    name: req.body.name,
+    median_age: req.body.median_age,
+    population: req.body.population,
+    fertility : req.body.fertility,
+    average_age: req.body.average_age,
+    population : req.body.population,
+    information : req.body.information
   };
 
   // Save Country in the database
   Country.create(country)
     .then(data => {
-      res.send(data);
+      res.status(201).send(data);
     })
     .catch(err => {
       res.status(500).send({
@@ -41,7 +46,7 @@ exports.findAll = (req, res) => {
     include: [db.provinces]
    })
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch(err => {
       res.status(500).send({
@@ -58,7 +63,7 @@ exports.findOne = (req, res) => {
   Country.findByPk(id, {include: [db.provinces]})
     .then(data => {
       if (data) {
-        res.send(data);
+        res.status(200).send(data);
       } else {
         res.status(404).send({
           message: `Cannot find Country with id=${id}.`
