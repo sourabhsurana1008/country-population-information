@@ -26,7 +26,7 @@ const country_data = JSON.parse(countryString);
 const provinceString = fs.readFileSync('./app/data/province.json');
 const province_data = JSON.parse(provinceString);
 
-db.sequelize.sync({force:true})
+db.sequelize.sync()
   .then((res) => {
     db.countries.bulkCreate(country_data, { validate: true }).then(() => {
       db.provinces.bulkCreate(province_data, { validate: true }).then(() => {

@@ -21,7 +21,8 @@ exports.create = (req, res) => {
     fertility : req.body.fertility,
     average_age: req.body.average_age,
     population : req.body.population,
-    information : req.body.information
+    information : req.body.information,
+    countryId : req.body.countryId
   };
 
   // Save Province in the database
@@ -42,8 +43,7 @@ exports.findAll = (req, res) => {
   const query = req.query;
 
   Province.findAll({ 
-    where:  generateQuery(query),
-    include: [db.provinces]
+    where:  generateQuery(query)
    })
     .then(data => {
       res.status(200).send(data);
@@ -60,7 +60,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Province.findByPk(id, {include: [db.provinces]})
+  Province.findByPk(id)
     .then(data => {
       if (data) {
         res.status(200).send(data);
