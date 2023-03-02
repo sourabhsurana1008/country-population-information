@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import DataGrid,{ Column, MasterDetail } from 'devextreme-react/data-grid';
+import React, { useState } from 'react';
+import DataGrid,{ Column } from 'devextreme-react/data-grid';
 
 function MasterDetailView(props) {
 
     const [data, setdata] = useState(props.data.data.provinces)
     return ( 
         <DataGrid id="grid-container"
+        height={150}
         dataSource={data}
         keyExpr="id"
         showBorders={true}

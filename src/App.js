@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
+import DataGrid,{ Column, MasterDetail, FilterRow, Export } from 'devextreme-react/data-grid';
+import DetailTemplate from './DetailTemplate';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-import DataGrid,{ Column, MasterDetail } from 'devextreme-react/data-grid';
-import DetailTemplate from './DetailTemplate';
 
 function App() {
   const fetchData = () => {
-    return fetch("http://localhost:8080/api/countries")
+    return fetch(`${process.env.REACT_APP_API}countries`)
       .then((response) => response.json())
       .then((data) => setData(data));
   }
@@ -17,17 +17,20 @@ function App() {
   }, [])
   return (
     <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-
+      <h4 class="mb-3  font-extrabold leading-none tracking-tight text-amber-500 md:text-3xl 
+        lg:text-4xl dark:text-white text-center">World’s Population Dashboard</h4>
       <DataGrid id="grid-container"
         dataSource={data}
         keyExpr="id"
         showBorders={true}
-      >
-        <Column dataField="name"  caption="Name" />
-        <Column dataField="population" caption="Population" />
-        <Column dataField="median_age"  caption="Median Age"/>
-        <Column dataField="fertility" caption="Fertility" />
-        <Column dataField="average_age" caption="Average Age" />
+       
+      > <FilterRow visible={true} />
+        <Export enabled={true} />
+        <Column dataField="name"  caption="Name" alignment="center" />
+        <Column dataField="population" caption="Population" alignment="center"  />
+        <Column dataField="median_age"  caption="Median Age" alignment="center" />
+        <Column dataField="fertility" caption="Fertility" alignment="center" />
+        <Column dataField="average_age" caption="Average Age" alignment="center" />
         <MasterDetail
           enabled={true}
           component={DetailTemplate}
