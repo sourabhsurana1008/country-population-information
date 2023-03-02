@@ -56,17 +56,16 @@ db.sequelize.sync({force:true})
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to application." });
 });
 
 require("./app/routes/country.routes")(app);
+require("./app/routes/province.routes")(app);
 app.use(
   '/api/doc',
   swaggerUi.serve, 
   swaggerUi.setup(swaggerDocument)
 );
-
-
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
